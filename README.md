@@ -50,6 +50,10 @@ npm run start-noflp
 
 Open the displayed URL in a browser to use the app.
 
+## Screenshots
+
+> Add screenshots here showing the UI in action. Example: table display, row add/delete, CSV export.
+
 ## Usage
 
 1. Select a `Site` and a `Time Element`, then enter `REASON_CODE1` and click `OK`.
@@ -89,10 +93,19 @@ This repository contains an `MIT` license in `LICENSE`.
 
 ---
 
-### Helpful next steps (optional)
+## GitHub Actions CI
 
--+- Add a screenshot under `/docs` and reference it in this README.
--+- Add a GitHub Actions workflow to run tests on each PR (I can scaffold one for you).
--+- Add issue and PR templates to streamline collaboration.
+A GitHub Actions workflow (`.github/workflows/ci.yml`) is configured to run on every push and pull request:
 
-If you want any of the above added now (screenshots, CI workflow, templates), tell me which and I'll add them.
+- Runs on Node.js 16.x and 18.x
+- Installs dependencies and builds the project
+- Runs any configured tests
+
+See the workflow file for details.
+
+## Issue & PR Templates
+
+Use the GitHub issue templates (`.github/ISSUE_TEMPLATE/`) to report bugs or request features.
+Pull requests should follow the checklist in `.github/pull_request_template.md`.
+
+---
