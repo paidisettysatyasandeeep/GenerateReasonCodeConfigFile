@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.ui5/
 .scp/
 .env
 Makefile*.mta
@@ -8,6 +9,7 @@ mta-*
 resources
 archive.zip
 .*_mta_build_tmp
+ui5-dist.yaml
 
 # IDE / OS
 .vscode/

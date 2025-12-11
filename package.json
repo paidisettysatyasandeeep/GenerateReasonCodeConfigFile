@@ -1,6 +1,7 @@
 {
   "name": "downtimeconf",
   "version": "0.0.1",
+  "homepage": "https://paidisattysasandeep.github.io/GenerateReasonCodeConfigFile",
   "description": "An SAP Fiori application.",
   "keywords": [
     "ui5",
@@ -10,13 +11,15 @@
   "main": "webapp/index.html",
   "devDependencies": {
     "@sap/ux-ui5-tooling": "1",
-    "@ui5/cli": "^4.0.38"
+    "@ui5/cli": "^4.0.38",
+    "gh-pages": "^6.3.0"
   },
   "scripts": {
     "start": "fiori run --open \"test/flp.html#app-preview\"",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flp.html#app-preview\"",
-    "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
-    "deploy": "fiori verify",
+    "build": "ui5 build --clean-dest --all",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "deploy-config": "fiori add deploy-config",
     "start-noflp": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",
     "int-test": "fiori run --open 'test/integration/opaTests.qunit.html'",
