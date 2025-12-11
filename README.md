@@ -103,9 +103,4 @@ A GitHub Actions workflow (`.github/workflows/ci.yml`) is configured to run on e
 
 See the workflow file for details.
 
-## Issue & PR Templates
-
-Use the GitHub issue templates (`.github/ISSUE_TEMPLATE/`) to report bugs or request features.
-Pull requests should follow the checklist in `.github/pull_request_template.md`.
-
 ---
