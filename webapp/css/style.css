@@ -1,0 +1,10 @@
+/* Enter your custom styles here */
+
+.largeFont {
+    font-size: 1.25rem !important;
+}
+
+.customFont {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+    font-weight: 700 !important;
+}
