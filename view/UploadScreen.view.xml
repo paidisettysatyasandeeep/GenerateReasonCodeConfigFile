@@ -1,0 +1,109 @@
+<mvc:View controllerName="downtimeconf.controller.UploadScreen"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m">
+    <Page showHeader="false">
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Panel >
+                    <HBox >
+                        <Text class="largeFont customFont" text="Downtime Reason Code Configuration" />
+                    </HBox>
+                </Panel>
+                <Panel class="sapUiSmallMarginTop">
+
+                    <!-- Top inputs: Site, Time Element, REASON_CODE1 and OK -->
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
+                        <VBox width="33%">
+                            <Label text="Site" />
+                            <ComboBox id="siteCombo" width="80%" items="{ path: '/sites' }" showClearIcon="true" selectedKey="{/selectedSite}" enabled="{= ! ${/locked} }">
+                                <core:Item key="{key}" text="{text}" />
+                            </ComboBox>
+                        </VBox>
+
+                        <VBox width="33%">
+                            <Label text="Time Element" />
+                            <ComboBox id="timeElement" width="80%" selectedKey="{/timeElement}" showClearIcon="true" enabled="{= ! ${/locked} }">
+                                <core:Item key="PLANNED_DOWN" text="PLANNED DOWNTIME" />
+                                <core:Item key="UNPLANNED_DOWN" text="UNPLANNED DOWNTIME" />
+                            </ComboBox>
+                        </VBox>
+
+                        <VBox width="33%">
+                            <Label text="REASON_CODE1" />
+                            <Input id="reason1Input" width="80%" value="{/reasonCode1}" placeholder="Enter REASON_CODE1" enabled="{= ! ${/locked} }" />
+                        </VBox>
+
+                        <VBox>
+                            <HBox >
+                                <Button text="OK" press="onConfirmInitialRow" enabled="{= ! ${/locked} }" icon="sap-icon://accept"/>
+                                <Button id="clearButton" class="sapUiSmallMarginBegin" text="Clear" press="onClearInitialRow" enabled="false" icon="sap-icon://sys-cancel" type="Negative"/>
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </Panel>
+
+                <!-- Dynamic rows container (each row: REASON_CODE2 + REASON_CODE3) -->
+                <Panel headerText="Reason rows" expandable="false" class="sapUiSmallMarginTop">
+                    <Button text="Add REASON_CODE2 / REASON_CODE3" press="onAddReasonRow" enabled="{/locked}"/>
+                    <VBox id="dynamicRows" />
+                </Panel>
+
+                <Panel class="sapUiSmallMarginTop">
+
+                    <!-- Row count on left, buttons on right -->
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
+                        <Text text="Total Rows: {/rowCount}" />
+                        <HBox>
+                            <Button id="downloadButton" text="Download (CSV)" press="onDownloadCSV" icon="sap-icon://download" type="Transparent" enabled="false"/>
+                            <Button id="clearAllButton" text="Clear All" press="onClearAll" type="Negative" icon="sap-icon://delete" class="sapUiSmallMarginBegin" enabled="false"/>
+                        </HBox>
+                    </HBox>
+
+                    <!-- Table showing data -->
+                    <Table id="dataTable" inset="false" items="{/rows}" alternateRowColors="true">
+                        <columns>
+                            <Column>
+                                <Text text="Site"/>
+                            </Column>
+                            <Column>
+                                <Text text="Time Element"/>
+                            </Column>
+                            <Column>
+                                <Text text="REASON_CODE1"/>
+                            </Column>
+                            <Column>
+                                <Text text="REASON_CODE2"/>
+                            </Column>
+                            <Column>
+                                <Text text="REASON_CODE3"/>
+                            </Column>
+                            <Column>
+                                <Text text="DESCRIPTION_EN"/>
+                            </Column>
+                            <Column>
+                                <Text text="Actions"/>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{site}" />
+                                    <Text text="{time}" />
+                                    <Text text="{reason1}" />
+                                    <Text text="{reason2}" />
+                                    <Text text="{reason3}" />
+                                    <Text text="{description}" />
+                                    <HBox>
+                                        <Button icon="sap-icon://delete" type="Reject" press="onDeleteRow" />
+                                    </HBox>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </Panel>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

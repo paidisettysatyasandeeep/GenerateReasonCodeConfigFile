@@ -1,0 +1,2 @@
+sap.ui.define(["downtimeconf/controller/UploadScreen.controller"],function(e){"use strict";QUnit.module("UploadScreen Controller");QUnit.test("I should test the UploadScreen controller",function(n){var o=new e;o.onInit();n.ok(o)})});
+//# sourceMappingURL=UploadScreen.controller.js.map
