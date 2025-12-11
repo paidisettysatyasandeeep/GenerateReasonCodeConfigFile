@@ -24,3 +24,5 @@ coverage/
 # Local env files
 .env.local
 .env.*.local
+
+.github
