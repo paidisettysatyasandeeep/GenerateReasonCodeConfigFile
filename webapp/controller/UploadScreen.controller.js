@@ -6,13 +6,8 @@ sap.ui.define(
     "sap/m/VBox",
     "sap/m/Input",
     "sap/m/TextArea",
-    "sap/m/ComboBox",
     "sap/m/Label",
     "sap/m/Button",
-    "sap/ui/core/Item",
-    "sap/m/Table",
-    "sap/m/ColumnListItem",
-    "sap/m/Text",
     "sap/m/MessageToast",
   ],
   function (
@@ -22,13 +17,8 @@ sap.ui.define(
     VBox,
     Input,
     TextArea,
-    ComboBox,
     Label,
     Button,
-    Item,
-    Table,
-    ColumnListItem,
-    Text,
     MessageToast
   ) {
     "use strict";
@@ -63,12 +53,12 @@ sap.ui.define(
             { key: "6500", text: "6500" },
             { key: "6600", text: "6600" },
           ],
-          selectedSite: "", // now empty — user must fill before OK
-          timeElement: "", // user chooses before OK
-          reasonCode1: "", // user provides before OK
+          selectedSite: "", 
+          timeElement: "", 
+          reasonCode1: "", 
           locked: false, // false until OK clicked
-          rows: [], // start empty; initial row added on OK
-          rowCount: 0, // track row count for dynamic display
+          rows: [], 
+          rowCount: 0, 
         });
 
         oModel.setSizeLimit(10000);
@@ -76,20 +66,17 @@ sap.ui.define(
         this.getView().setModel(oModel);
         this._oModel = oModel;
 
-        // dynamic rows container reference (may be undefined until rendering)
         this._oDynamicRows = this.byId("dynamicRows");
       },
 
-      /**
-       * Update row count in the model.
-       */
+      // Update row count in the model to add that in table.
       _updateRowCount: function () {
         var aRows = this._oModel.getProperty("/rows") || [];
         this._oModel.setProperty("/rowCount", aRows.length);
       },
 
       /**
-       * Handler for top-level OK button.
+       * Handler for OK button.
        * Validates Site, Time Element and REASON_CODE1 are present.
        * Adds the initial row to the table and locks the top fields (site, timeElement, reasonCode1).
        */
@@ -116,7 +103,6 @@ sap.ui.define(
         // Add initial confirmed row (Site, Time, REASON_CODE1, DESCRIPTION_EN populated from reason1)
         var aRows = oModel.getProperty("/rows") || [];
         // If table already contains rows, avoid creating duplicate initial confirmation
-        // We'll check by existence of a row with empty reason2 & reason3 matching current site/time/reason1
         var exists = aRows.some(function (r) {
           return (
             r.site === sSite &&
@@ -159,7 +145,7 @@ sap.ui.define(
       },
 
       /**
-       * Create dynamic input block: REASON_CODE2 (Input) + REASON_CODE3 (TextArea)
+       * Create dynamic input block: REASON_CODE2 + REASON_CODE3
        * Add button is enabled only when /locked is true (OK clicked).
        */
       onAddReasonRow: function () {
@@ -242,9 +228,7 @@ sap.ui.define(
         this.getView().byId("clearButton").setEnabled(false);
       },
 
-      /**
-       * Save dynamic rows: add one header row for REASON_CODE2 (reason3 empty), then one row per REASON_CODE3 code.
-       */
+      // When the save button inside is clicked then this func will create rows in the table
       _onSaveRow: function (oReason2Input, oReason3Area) {
         var oModel = this._oModel;
         if (!oModel.getProperty("/locked")) {
@@ -272,13 +256,6 @@ sap.ui.define(
             return String(v).trim();
           })
           .filter(Boolean);
-
-        // if (aReason3.length === 0) {
-        //   MessageToast.show(
-        //     "No valid REASON_CODE3 values found after parsing."
-        //   );
-        //   return;
-        // }
 
         var aRows = oModel.getProperty("/rows") || [];
         var existingSet = new Set(
@@ -374,13 +351,10 @@ sap.ui.define(
         return reason3;
       },
 
-      /**
-       * Delete a row by index (triggered from table delete button).
-       */
+      // Deleting table row from the delete button
       onDeleteRow: function (oEvent) {
         var oSource = oEvent.getSource();
 
-        // climb parents until we find a ColumnListItem (or stop if none)
         var oParent = oSource.getParent();
         while (
           oParent &&
@@ -390,14 +364,13 @@ sap.ui.define(
         }
 
         if (!oParent) {
-          // fallback: try to locate the ColumnListItem by searching ancestors of the button's DOM ref
           jQuery.sap.log.warning(
             "Could not find ColumnListItem ancestor for delete button."
           );
           return;
         }
 
-        var oListItem = oParent; // this is the ColumnListItem
+        var oListItem = oParent; 
         var oTable = this.byId("dataTable");
         if (!oTable) {
           jQuery.sap.log.warning("dataTable not found when deleting row.");
@@ -423,6 +396,16 @@ sap.ui.define(
           var oClearButton = this.getView().byId("clearButton");
           if (oClearButton) {
             oClearButton.setEnabled(false);
+          }
+
+          var oDownloadButton = this.getView().byId("downloadButton");
+          if (oDownloadButton) {
+            oDownloadButton.setEnabled(false);
+          }
+
+          var oClearAllButton = this.getView().byId("clearAllButton");
+          if (oClearAllButton) {
+            oClearAllButton.setEnabled(false);
           }
         }
       },
